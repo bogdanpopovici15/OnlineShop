@@ -1,0 +1,41 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="DBShopModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Item">
+    <Key>
+      <PropertyRef Name="ItemId" />
+    </Key>
+    <Property Name="ItemId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="varchar" MaxLength="50" />
+    <Property Name="Specification" Type="varchar" MaxLength="50" />
+    <Property Name="Price" Type="varchar" MaxLength="50" />
+    <Property Name="ShopId" Type="int" />
+  </EntityType>
+  <EntityType Name="Shop">
+    <Key>
+      <PropertyRef Name="ShopId" />
+    </Key>
+    <Property Name="ShopId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="varchar" MaxLength="50" />
+    <Property Name="Adress" Type="varchar" MaxLength="50" />
+  </EntityType>
+  <Association Name="FK_Item_Shop">
+    <End Role="Shop" Type="Self.Shop" Multiplicity="0..1" />
+    <End Role="Item" Type="Self.Item" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Shop">
+        <PropertyRef Name="ShopId" />
+      </Principal>
+      <Dependent Role="Item">
+        <PropertyRef Name="ShopId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="DBShopModelStoreContainer">
+    <EntitySet Name="Item" EntityType="Self.Item" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Shop" EntityType="Self.Shop" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_Item_Shop" Association="Self.FK_Item_Shop">
+      <End Role="Shop" EntitySet="Shop" />
+      <End Role="Item" EntitySet="Item" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
